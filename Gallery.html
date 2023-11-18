@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery</title>
+</head>
+<body>
+  <div>
+    <img id="imageDisplay" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/49e3b36f-6a1d-4f77-9413-ee09ad7cbfd7/dedo19b-6f56a2ac-cf67-4a1d-b63a-cafcf2cc60eb.png/v1/fill/w_719,h_1111,q_70,strp/inkodoom_r_by_jumpei_dedo19b-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...'" alt="Image">
+    <div id="overlay"></div>
+  </div>
+  
+  <button onclick="firstImage()">First</button>
+  <button onclick="previousImage()">Previous</button>
+  <button onclick="nextImage()">Next</button>
+  <button onclick="lastImage()">Last</button>
+
+  <script>
+    const images = [
+      'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/49e3b36f-6a1d-4f77-9413-ee09ad7cbfd7/dedrc4v-0d837b02-36f6-44c0-88ff-b29ebccd2ef2.jpg/v1/fill/w_920,h_868,q_70,strp/printandcolorpreview_by_jumpei_dedrc4v-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTIwOCIsInBhdGgiOiJcL2ZcLzQ5ZTNiMzZmLTZhMWQtNGY3Ny05NDEzLWVlMDlhZDdjYmZkN1wvZGVkcmM0di0wZDgzN2IwMi0zNmY2LTQ0YzAtODhmZi1iMjllYmNjZDJlZjIuanBnIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Hua1STF9x02NMcXSrFPZ_k743-sSGRQmmdvcZmQlh4A', 
+      'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/49e3b36f-6a1d-4f77-9413-ee09ad7cbfd7/dedo19b-6f56a2ac-cf67-4a1d-b63a-cafcf2cc60eb.png/v1/fill/w_719,h_1111,q_70,strp/inkodoom_r_by_jumpei_dedo19b-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTcwMCIsInBhdGgiOiJcL2ZcLzQ5ZTNiMzZmLTZhMWQtNGY3Ny05NDEzLWVlMDlhZDdjYmZkN1wvZGVkbzE5Yi02ZjU2YTJhYy1jZjY3LTRhMWQtYjYzYS1jYWZjZjJjYzYwZWIucG5nIiwid2lkdGgiOiI8PTExMDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.swo576jdEWAco8wgoAslPJ5MxWvNgPwqnLYJxRXy6S0',
+      'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/49e3b36f-6a1d-4f77-9413-ee09ad7cbfd7/dedo19f-9508ed0b-b2ca-4cae-9dec-cf30f24a1c23.jpg/v1/fill/w_833,h_960,q_70,strp/orc_wielder_by_jumpei_dedo19f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTQ3NSIsInBhdGgiOiJcL2ZcLzQ5ZTNiMzZmLTZhMWQtNGY3Ny05NDEzLWVlMDlhZDdjYmZkN1wvZGVkbzE5Zi05NTA4ZWQwYi1iMmNhLTRjYWUtOWRlYy1jZjMwZjI0YTFjMjMuanBnIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.80cApmMeQMgZGhV6UrYbvBoHZnd6gFfFc1-V18cuuNU',
+      'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/49e3b36f-6a1d-4f77-9413-ee09ad7cbfd7/d8vshh8-8930debe-0223-4727-9d5d-e71094c12aba.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ5ZTNiMzZmLTZhMWQtNGY3Ny05NDEzLWVlMDlhZDdjYmZkN1wvZDh2c2hoOC04OTMwZGViZS0wMjIzLTQ3MjctOWQ1ZC1lNzEwOTRjMTJhYmEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.dzPMG6mhqyCOs9Ef9XcUNmzdVgvuQ5XaYAjO9FAdOqQ'
+    ];
+
+    let currentIndex = 0;
+    const imageDisplay = document.getElementById('imageDisplay');
+    const overlay = document.getElementById('overlay');
+
+    function displayImage() {
+      imageDisplay.src = images[currentIndex];
+    }
+
+    function firstImage() {
+      currentIndex = 0;
+      displayImage();
+    }
+
+    function previousImage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        displayImage();
+      }
+    }
+
+    function nextImage() {
+      if (currentIndex < images.length - 1) {
+        currentIndex++;
+        displayImage();
+      }
+    }
+
+    function lastImage() {
+      currentIndex = images.length - 1;
+      displayImage();
+    }
+
+    // Overlay effect
+    imageDisplay.addEventListener('mouseover', () => {
+      overlay.style.opacity = '0.5';
+    });
+
+    imageDisplay.addEventListener('mouseout', () => {
+      overlay.style.opacity = '0';
+    });
+
+    // Initial image display
+    displayImage();
+  </script>
+</body>
+</html>
